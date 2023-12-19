@@ -69,7 +69,7 @@ const gallery = document.querySelector('.gallery');
 const createMarkup = ({ preview, original, description }) =>
   `
   <li class="gallery-item">
-  <a class="gallery-link" href="${original}">
+  <a class="gallery-link" href="${original}" onclick="event.preventDefault()">
     <img
       class="gallery-image"
       src="${preview}"
