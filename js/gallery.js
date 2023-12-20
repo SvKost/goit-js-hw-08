@@ -69,17 +69,20 @@ const gallery = document.querySelector('.gallery');
 const createMarkup = ({ preview, original, description }) =>
   `
   <li class="gallery-item">
-  <a class="gallery-link" href="${original}" onclick="event.preventDefault()">
-    <img
-      class="gallery-image"
-      src="${preview}"
-      data-source="${original}"
-      alt="${description}"
-    />
-  </a>
-</li>
-  `;
+    <a
+      class="gallery-link"
+      href="${original}" 
+      onclick="event.preventDefault()">
+        <img
+          class="gallery-image"
+          src="${preview}" 
+          data-source="${original}" 
+          alt="${description}"
+        />
+    </a>
+  </li>
+`;
 
-const markup = images.map(createMarkup).join();
+const markup = images.map(createMarkup).join('');
 
 gallery.insertAdjacentHTML('afterbegin', markup);
