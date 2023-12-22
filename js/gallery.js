@@ -64,15 +64,9 @@ const images = [
   },
 ];
 
-const gallery = document.querySelector('.gallery');
-
 const createMarkup = ({ preview, original, description }) =>
-  `
-  <li class="gallery-item">
-    <a
-      class="gallery-link"
-      href="${original}" 
-      onclick="event.preventDefault()">
+  `<li class="gallery-item">
+    <a class="gallery-link" href="${original}">
         <img
           class="gallery-image"
           src="${preview}" 
@@ -80,9 +74,40 @@ const createMarkup = ({ preview, original, description }) =>
           alt="${description}"
         />
     </a>
-  </li>
-`;
+  </li>`;
 
 const markup = images.map(createMarkup).join('');
 
+const gallery = document.querySelector('.gallery');
 gallery.insertAdjacentHTML('afterbegin', markup);
+
+function onImgClick(event) {
+  event.preventDefault();
+
+  if (event.target.nodeName !== 'IMG') {
+    return;
+  }
+
+  const instance = basicLightbox.create(
+    `
+    <img class="lagre-image" src="${event.target.dataset.source}" width="800" height="600">
+    `,
+    {
+      onShow: () => {
+        document.addEventListener('keydown', closeModal);
+      },
+      onClose: () => {
+        document.removeEventListener('keydown', closeModal);
+      },
+    }
+  );
+  instance.show();
+
+  function closeModal(event) {
+    if (event.code === 'Escape') {
+      instance.close();
+    }
+  }
+}
+
+gallery.addEventListener('click', onImgClick);
